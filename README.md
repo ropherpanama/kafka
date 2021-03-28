@@ -20,5 +20,9 @@ call :concat %BASE_DIR%\share\java\kafka\*
 
 ```D:\development\confluent-kafka-installation\confluent-6.1.1\bin\windows>kafka-server-start.bat ../../etc/kafka/server.properties```
 
+Una vez iniciado con exito, debe existir un kafka server ID:
 
+``` 
+[2021-03-28 13:50:49,200] INFO [KafkaServer id=0] started (kafka.server.KafkaServer)
+```
 
