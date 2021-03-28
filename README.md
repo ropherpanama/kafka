@@ -64,5 +64,26 @@ kafka-console-consumer.bat --topic test --bootstrap-server localhost:9092 --from
 
 Ahora, cada vez que el productor envie un mensaje al topic, inmediatamente sera transmitido por consola por el consumidor.
 
-# Broker Multinodo
+## Broker Multinodo
+
+Para crear un grupo de brokers en una misma maquina es preciso modificar algunos valores en el archivo de configuracion de kafka (*server.properties*), en un ambiente distrubuido real no es requerido ya que los brokers estaran en distintos servidores. Sin embargo, el unico punto conflictivo puede ser el *brokerID*, es posible configurarlo manualmente para cada servidor aunque tambien se puede configurar para que se asigne automaticamente un brokerID distinto para cada servidor.
+
+En un caso multinodo en un solo equipo se debe realizar lo siguiente:
+
+- Crear **n** copias del archivo *server.properties* (donde n es la cantidad de brokers que se desean configurar)
+- Para cada copia del archivo los valores o propiedades a cambiar para evitar conflictos son: broker.id, listeners (apuntar a un puerto diferente por broker) y log.dirs
+
+Por ejemplo:
+
+```
+server-0.properties (broker.id=0, listeners=PLAINTEXT://:9092, log.dirs=/tmp/kafka-logs-0)
+server-1.properties (broker.id=1, listeners=PLAINTEXT://:9093, log.dirs=/tmp/kafka-logs-1)
+server-2.properties (broker.id=2, listeners=PLAINTEXT://:9094, log.dirs=/tmp/kafka-logs-2)
+```
+
+Hecho lo anterior, se debe levantar el servicio de Zookeeper y luego levantar cada broker de kafka por cada archivo de configuracion.
+
+*Dato: si se borra todo lo que existe en la carpeta /tmp es como iniciar el broker desde cero, toda data previa se elimará.*
+
+
 
