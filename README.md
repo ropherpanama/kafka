@@ -85,5 +85,17 @@ Hecho lo anterior, se debe levantar el servicio de Zookeeper y luego levantar ca
 
 *Dato: si se borra todo lo que existe en la carpeta /tmp es como iniciar el broker desde cero, toda data previa se elimará.*
 
+# Consideraciones para elegir un diseño de streams de datos
 
+  1. Sensibilidad al tiempo (respuestas rápidas) de evento a consumidor y visceversa
+  2. Desacoplamiento, los consumidores y productores deben poder evolucionar libremente
+  3. Data format evolution, el formato de datos a intercambiar debe ser extensible y adaptable
+  4. Realiability, tolerancia a fallo y evitar pérdida de transacciones
+  5. Escalabilidad, la solución debe poder escalar horizontalmente de acuerdo a la demanda de los sistemas
+
+## Formatos de intercambios de datos
+
+  1. Shared database: productores y consumidores escriben y leen datos de la misma base de datos. Se compromete realiability y escalabilidad. Para diseños real time no es la mejor opción ya que multiples sistemas estarán escribiendo y leyendo la misma información.
+  2. RMI o RPC
+  3. FIle transfer
 
